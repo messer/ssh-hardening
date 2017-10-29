@@ -33,6 +33,10 @@
     - fail:
         msg: The generated sshd_config is invalid
 
-- name: restart ssh
-  when: sshd_config.changed
+- name: restart ssh (Debian/Ubuntu)
+  when: sshd_config.changed and (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
   service: name=ssh state=restarted
+
+- name: restart ssh (CoreOS)
+  when: sshd_config.changed and (ansible_distribution == 'CoreOS' or ansible_distribution == 'Container Linux by CoreOS')
+  service: name=sshd.service state=restarted
