@@ -24,6 +24,7 @@
 
     - name: Validate sshd config
       command: sshd -t
+      when: sshd_config.changed
 
   rescue:
     - name: Restore sshd config
@@ -36,3 +37,11 @@
 - name: restart ssh
   when: sshd_config.changed
   service: name=ssh state=restarted
+
+- name: Install root SSH keys
+  authorized_key:
+    key: "{{ item }}"
+    user: root
+    state: present
+  with_items: "{{ sshd_root_authorized_keys|default([]) }}"
+

@@ -1,7 +1,7 @@
 SSH Hardening
 =========
 
-This is a role to give a baseline level of security to SSH on systems.
+Forked from ameliaikeda/ssh-hardening. This is a role to give a baseline level of security to SSH on systems.
 
 Role Variables
 --------------
@@ -13,6 +13,10 @@ Addresses to bind SSH to. Note that port is required on each entry.
 ```
 sshd_config_bind_addresses: ['0.0.0.0:22']
 ```
+
+#### Prepopulated root authorized_keys
+
+Create a list in var `sshd_root_authorized_keys`.
 
 #### Root Login
 
